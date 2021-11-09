@@ -1,0 +1,32 @@
+zipkin:
+----------
+->Running zipkin locally through docker = docker run -d -p 9411:9411 openzipkin/zipkin
+->UI = http://localhost:9411/zipkin
+
+
+Consul:
+------------------
+->consul ui= http://localhost:8500/ui/dc1/services
+->To up consul server= consul agent -server -bootstrap-expect=1 -data-dir=consul-data -ui -bind=192.168.10.5  (SYSTEM IP ADDRESS)
+->DeRegistering the service from consul :- consul services deregister -id=Service_name
+
+
+request:-
+------------------------
+GET:::http://localhost:1111/props   (to get KEY-VALUE pairs from consule )
+
+GET:::http://localhost:1111/getPrice?price=1000  (to get price after discount - implementation of K-V of consul)
+
+GET::: http://localhost:1111/order/getAllProducts ( GET all products)
+
+
+killing the service:
+-----------------------------
+netstat -ano | findstr :<PORT>
+
+tskill typeyourPIDhere 
+
+
+consul properties:-
+----------------------------------------
+https://cloud.spring.io/spring-cloud-consul/reference/html/appendix.html

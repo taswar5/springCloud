@@ -1,0 +1,27 @@
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500  
+      discovery:
+        instance-id: order-service-${random.int(1,100)}
+        healthCheckPath: /actuator/health           # Alternate server path to invoke for health checking.
+        healthCheckInterval: 2s                     #How often to perform the health check
+        health-check-critical-timeout: 10s    #Timeout to deregister services critical for longer than timeout
+        register-health-check: true
+      config:
+        fail-fast: true   #Throw exceptions during config lookup if true, otherwise, log warnings.
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      order-service-cb-prop:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        waitDurationInOpenState: 15s
+        slidingWindowType: COUNT_BASED    
