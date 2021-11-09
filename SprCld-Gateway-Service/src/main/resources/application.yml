@@ -1,0 +1,36 @@
+server:
+  port: 2222
+  
+management:
+  endpoint.gateway.enabled: true
+  endpoints.web.exposure.include: gateway,health,info 
+ 
+spring:
+  cloud:
+   consul:
+      host: localhost
+      port: 8500  
+      discovery:
+        instance-id: gateway-service
+        healthCheckPath: /actuator/health           # Alternate server path to invoke for health checking.
+        healthCheckInterval: 2s                     #How often to perform the health check
+        health-check-critical-timeout: 10s    #Timeout to deregister services critical for longer than timeout
+        register-health-check: true
+        
+   #cloud gateway properties
+   gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: catalogueService
+        uri: lb://CATALOGUE-SERVICE/
+        predicates:
+        - Path=/catalogue/**
+      - id: orderService
+        uri: lb://ORDER-SERVICE/
+        predicates:
+        - Path=/order/**
+      default-filters:
+       - AddRequestHeader=X-Request-routed-from,Gateway-Service
+   
