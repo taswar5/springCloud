@@ -1,5 +1,5 @@
 package com.catalogue.service.repository;
 
-public interface CatalogueRepository{
+public interface CatalogueRepository {
 
 }

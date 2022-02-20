@@ -1,15 +1,15 @@
 server:
- port: ${random.int(5000,5100)}
+  port: ${random.int(5000,5100)}
 spring:
   cloud:
     consul:
       host: localhost
-      port: 8500   
+      port: 8500
       discovery:
         instance-id: catalogue-service-${random.int(1,100)}
         healthCheckPath: /actuator/health
         register-health-check: true
-        healthCheckInterval: 2s  
+        healthCheckInterval: 2s
         health-check-critical-timeout: 5s
         heartbeat:
           enabled: true

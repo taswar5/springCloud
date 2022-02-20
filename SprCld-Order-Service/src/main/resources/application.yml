@@ -2,7 +2,7 @@ spring:
   cloud:
     consul:
       host: localhost
-      port: 8500  
+      port: 8500
       discovery:
         instance-id: order-service-${random.int(1,100)}
         healthCheckPath: /actuator/health           # Alternate server path to invoke for health checking.
